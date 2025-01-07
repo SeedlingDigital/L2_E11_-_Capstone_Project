@@ -11,14 +11,18 @@ const ProductCard = (props) => {
   const state = useSelector(state => state.cartList);
   const dispatch = useDispatch();
 
-  const [buttonState, setButtonState] = useState(props.productRecord.selected ? "Remover Item" : "Add Item");
-  const [selectedState, setSelectedState] = useState(props.productRecord.selected);
+  const [buttonState, setButtonState] = useState(props.cartRecord === "Y" ? "Remover Item" : props.productRecord.selected ? "Remover Item" : "Add Item");
+  const [selectedState, setSelectedState] = useState(props.cartRecord === "Y" ? true : props.productRecord.selected);
 
   let buttonText = props.productRecord.selected ? "Remove Item" : "Add Item";
 
   let cartTmpList = [];
   cartTmpList = state.cartList;
   listCartProducts();
+
+
+
+
 
   function addProduct()
   {

@@ -27,6 +27,7 @@ function MessageModal(props) {
             <Modal.Title>{props.heading}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {/*{(props.useReact === "Y") ? `${props.message}` : <p>{props.message}</p>}*/}
             <p>{props.message}</p>
           </Modal.Body>
           <Modal.Footer>

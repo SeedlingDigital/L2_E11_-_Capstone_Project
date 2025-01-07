@@ -17,6 +17,33 @@
 }
 
 .checkout-button{
+  display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 50%;
+}
+
+.checkout-info-click{
+  cursor: pointer;
+}
+
+
+.checkout-info{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20%;
+  margin-top: 10%;
+
+}
+
+.checkout-info-icon{
+  /*margin-left: 10px;*/
+  position: relative;
+  width: 100%;
+  height: 30px;
+  /*top: 50%;*/
+  transform: translateY(-50%);
+  font-size: 16px;
+
 }
