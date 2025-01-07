@@ -24,8 +24,10 @@
   font-size: 18px;
   color: #fff;
   position: relative;
+  display: flex;
+  gap: 1rem;
   font-weight: 500;
-  margin-left: 40px;
+  margin-left: 10px;
 }
 
 .navbar-nav a::before{

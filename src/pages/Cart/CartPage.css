@@ -1,0 +1,22 @@
+.cart-body{
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+  min-height: 100vh;
+  background: url("../../Assets/images/backgrounds/checkout.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.cart-title{
+  color: #282c34;
+  margin-top: 20px;
+}
+
+.checkout-button{
+  justify-content: center;
+  align-items: center;
+}

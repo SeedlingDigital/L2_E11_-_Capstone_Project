@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./UserAuth.css"
 import {FaUser, FaLock} from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -57,6 +57,8 @@ const LoginPage = () => {
     listUsers();
 
     //For testing purpose, take this out once we want to run the full page
+    const userRecord = new UserModel("Ruaan", "Nortje", "test@test.com", "Ruaann", "09098902", "YES");
+    dispatch(addUser(userRecord));
     let userName1 = "Ruaan";
     navigate("/landing", {state: {user: userName1}});
 
@@ -288,8 +290,9 @@ const LoginPage = () => {
 
 
   return (
-      <div className="body">
-        <div className="wrapper">
+     //<body className="login-body">
+      <div className="login-body">
+        <div className="login-wrapper">
           <form action={""}>
             <h1>{formState}</h1>
             {
@@ -297,19 +300,19 @@ const LoginPage = () => {
                   <div>
                     <div className="label">
                       <label>First Name</label>
-                      <div className="input-box">
+                      <div className="login-input-box">
                         <input ref={firstNameInput} type="text" placeholder="Joe" required
 
                         />
-                        <FaUser className={"icon"}/>
+                        <FaUser className={"login-icon"}/>
                       </div>
                       {errors.firstName && <span className={"error-text"}> {errors.firstName} </span>}
                     </div>
                     <div>
                       <label>Last Name</label>
-                      <div className="input-box">
+                      <div className="login-input-box">
                         <input ref={lastNameInput} type="text" placeholder="Soap" required/>
-                        <FaUser className={"icon"}/>
+                        <FaUser className={"login-icon"}/>
                       </div>
                       {errors.lastName && <span className={"error-text"}> {errors.lastName} </span>}
                     </div>
@@ -318,9 +321,9 @@ const LoginPage = () => {
             }
             <div>
               <label>User name</label>
-              <div className="input-box">
+              <div className="login-input-box">
                 <input ref={userNameInput} type="text" placeholder="myUserName" required/>
-                <FaUser className={"icon"}/>
+                <FaUser className={"login-icon"}/>
               </div>
               {errors.userName && <span className={"error-text"}> {errors.userName} </span>}
             </div>
@@ -328,9 +331,9 @@ const LoginPage = () => {
               (formState === "Register") ?
                   <div>
                     <label>Email</label>
-                    <div className="input-box">
+                    <div className="login-input-box">
                       <input ref={emailInput} type="email" placeholder="joe.soap@example.com" required/>
-                      <MdEmail className={"icon"}/>
+                      <MdEmail className={"login-icon"}/>
                     </div>
                     {errors.email && <span className={"error-text"}> {errors.email} </span>}
                   </div>
@@ -338,24 +341,24 @@ const LoginPage = () => {
             }
             <div>
               <label>Password</label>
-              <div className="input-box">
+              <div className="login-input-box">
                 <input ref={passWordInput} type="password" placeholder="Test@123" required/>
-                <FaLock className={"icon"}/>
+                <FaLock className={"login-icon"}/>
               </div>
               {errors.password && <span className={"error-text"}> {errors.password} </span>}
             </div>
             {(formState === "Login") ? null :
                 <div>
                   <label>Confirm Password</label>
-                  <div className="input-box">
+                  <div className="login-input-box">
                     <input ref={confirmPasswordInput} type="password" placeholder="Test@123" required/>
-                    <FaLock className={"icon"}/>
+                    <FaLock className={"login-icon"}/>
                   </div>
                   {errors.confirmPassword && <span className={"error-text"}> {errors.confirmPassword} </span>}
                 </div>
             }
 
-            <div className="forgot">
+            <div className="login-forgot">
               {(formState === "Login") ?
                   <label><input ref={rememberMeCheckBoxInput} type={"checkbox"}/>Remember me</label> : null
               }
@@ -365,7 +368,7 @@ const LoginPage = () => {
             <button type="button" onClick={() => signIn()}>{formState}</button>
 
             {(formState === "Register") ? null :
-                <div className="register-link">
+                <div className="login-register-link">
                   <p>Don't have an account? <a href="#" onClick={() => changeFormState("Register")}>Register</a>
                   </p>
                 </div>
@@ -378,6 +381,7 @@ const LoginPage = () => {
                             message={modalMessage.message}/> : null}
         </div>
       </div>
+  //   </body>
   );
 
 }
