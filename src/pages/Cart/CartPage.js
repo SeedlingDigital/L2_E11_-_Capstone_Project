@@ -1,9 +1,7 @@
 import React from "react";
 import "./CartPage.css"
 import {useSelector, useDispatch} from "react-redux";
-import {addItem, removeItem, editItem} from "../../store/CartListState";
-import {useRef, useState} from "react";
-import {ProductModel} from "../../Models/ProductModel";
+import {useState} from "react";
 import ProductCard from "../../Components/Card/ProductCard";
 import { FaInfoCircle } from "react-icons/fa";
 import { Button } from "react-bootstrap"
@@ -14,6 +12,7 @@ import {MessageModel} from "../../Models/MessageModel";
 
 const CartPage = () => {
 
+  // Get the user details and the cart records
   const cartState = useSelector(state => state.cartList);
   const userState = useSelector(state => state.userList);
 
@@ -24,17 +23,15 @@ const CartPage = () => {
   let userName = "NO_USER";
   userName = userState.userList[0].userName ?? "NO_USER";
 
-  let qty = cartState.totalQty;
-
   let productsList = [];
   productsList = cartState.cartList;
 
 
   function checkOut()
   {
-
     const qty = Number(cartState.totalQty);
 
+    // If Qty is 0 or less then we cant proceed as there is nothing to check out.
     if(qty <= 0)
     {
       displayMessage("No Items", "There is no items to check out, please select products and then check out");
@@ -45,20 +42,10 @@ const CartPage = () => {
     }
   }
 
-
-
+  // If the user selected info on shipping methods then display the popup modal
   function showHelp()
   {
-    const messageText = <div>
-      <div>The following shipping methods are available</div>
-      <ul>
-        <il>Courier: Will take 2 - 5 business days</il>
-        <il>Over-night: Will be express and delivered by cob tomorrow</il>
-      </ul>
-    </div>;
-
-
-    displayMessage("Shipping methods", `The following shipping methods are available
+  displayMessage("Shipping methods", `The following shipping methods are available
     - Courier: Will take 2 - 5 business days
     - Over-night: Will be express and delivered by cob tomorrow`);
   }
@@ -72,6 +59,7 @@ const CartPage = () => {
   }
 
 
+  // return the display.
   return (
       <div className="cart-body">
         <div>

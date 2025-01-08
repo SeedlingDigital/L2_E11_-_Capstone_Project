@@ -35,6 +35,7 @@ const LoginPage = () => {
     password: "",
     confirmPassword: "",
   });
+  // Error validation for the form.
   const [errors, setErrors] = useState({});
 
 
@@ -50,38 +51,36 @@ const LoginPage = () => {
   let userList = [];
   userList = state.userList;
 
-
-
-
   function signIn() {
-    listUsers();
 
     //For testing purpose, take this out once we want to run the full page
-    const userRecord = new UserModel("Ruaan", "Nortje", "test@test.com", "Ruaann", "09098902", "YES");
-    dispatch(addUser(userRecord));
-    let userName1 = "Ruaan";
-    navigate("/landing", {state: {user: userName1}});
+    // const userRecord = new UserModel("Ruaan", "Nortje", "test@test.com", "Ruaann", "09098902", "YES");
+    // dispatch(addUser(userRecord));
+    // let userName1 = "Ruaan";
+    // navigate("/landing", {state: {user: userName1}});
 
-
-/*
+    // Check if any of the input has errors.
     if(formHasErrors())
     {
+      // If Errors then return back to the form and display the errors
       return;
     }
 
-
-    let firstName = firstNameInput.current.value;
-    let lastName = lastNameInput.current.value;
-    let email = emailInput.current.value;
+    // All forms share these two fields.
     let userName = userNameInput.current.value;
     let password = passWordInput.current.value;
-    let confirmPassword = confirmPasswordInput.current.value;
+
     let rememberMe = '';
 
-    if(rememberMeCheckBoxInput.current.value) {
-      rememberMe = rememberMeCheckBoxInput.current.value;
-    }
 
+    //Depending on the form action the certain fields will be active and populated
+    if(formState === "Login") {
+      if (rememberMeCheckBoxInput.current.value ?? "NO") {
+        rememberMe = rememberMeCheckBoxInput.current.value;
+      } else {
+        rememberMe = "NO";
+      }
+    }
     //Check if User exists
     let userIndex = -1;
     if (userName) {
@@ -103,7 +102,7 @@ const LoginPage = () => {
         }
         else
         {
-          displayMessage("Sign in error", `User ${userName} did not supply a correct username and password`);
+          displayMessage("Sign in error", `User ${userName} did not supply a correct username or password`);
         }
       }
       else
@@ -113,6 +112,7 @@ const LoginPage = () => {
       }
     }
     else if (formState === "ForgotPassword") {
+      let confirmPassword = confirmPasswordInput.current.value;
       //If Change password
       //Check if user exists.
       if (userIndex >= 0) {
@@ -143,6 +143,11 @@ const LoginPage = () => {
     else
     {
       if(formState === "Register") {
+
+        let firstName = firstNameInput.current.value;
+        let lastName = lastNameInput.current.value;
+        let email = emailInput.current.value;
+
         if(userIndex >= 0)
         {
           //Cant register user already exists
@@ -161,7 +166,7 @@ const LoginPage = () => {
       }
     }
 
- */
+
     listUsers();
   }
 
@@ -169,8 +174,6 @@ const LoginPage = () => {
   //I did not use YUP or Formik for the validations as I wanted to try something new
   function formHasErrors()
   {
-
-
      let userName = userNameInput.current.value ?? "";
      let password = passWordInput.current.value ?? "";
 
@@ -192,11 +195,13 @@ const LoginPage = () => {
         validationErrors.lastName = "Last Name is required";
       }
 
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
       if(!email.trim())
       {
         validationErrors.email = "Email is required";
       }
-      else if(!/\S+@\S+\.\S+/.test(email.value))
+      else if(!re.test(email))
       {
         validationErrors.email = "Email is not valid";
       }
@@ -219,7 +224,7 @@ const LoginPage = () => {
     {
       validationErrors.password = "Password is required";
     }
-    else if(passWordInput.current.value < 8)
+    else if(passWordInput.current.value.length < 8)
     {
       validationErrors.password = "Password should be at least 8 characters long";
     }
@@ -227,12 +232,22 @@ const LoginPage = () => {
     setFormData(validationErrors);
     setErrors(validationErrors);
 
+    if(Object.keys(validationErrors).length === 0)
+    {
+      return false
+    }
+    else
+    {
+      return true;
+    }
+
+
     return !!validationErrors;
   }
 
 
 
-
+  // This is for testing purpose to see if the records did populate and updated the list.
   function listUsers() {
     for(var i = 0; i < state.userList.length; i++) {
       console.log(userList[i]);
@@ -251,6 +266,7 @@ const LoginPage = () => {
     return -1;
   }
 
+  // This will execute the popup modal.
   function displayMessage(heading, message)
   {
     const messageModel = new MessageModel(heading,message, true);
@@ -259,6 +275,7 @@ const LoginPage = () => {
   }
 
 
+  // Clear all variables
   function clearAllVariables()
   {
     userNameInput.current.focus();
@@ -273,7 +290,7 @@ const LoginPage = () => {
 
 
 
-
+  // This will change the tag at the bottom to navigate back to the Login section
   function changeFormState(stateDescription) {
 
     // setFormState(stateDescription);
@@ -289,6 +306,7 @@ const LoginPage = () => {
   }
 
 
+  // Display section
   return (
      //<body className="login-body">
       <div className="login-body">
@@ -314,7 +332,7 @@ const LoginPage = () => {
                         <input ref={lastNameInput} type="text" placeholder="Soap" required/>
                         <FaUser className={"login-icon"}/>
                       </div>
-                      {errors.lastName && <span className={"error-text"}> {errors.lastName} </span>}
+                      {errors.lastName && <span className={"login-error-text"}> {errors.lastName} </span>}
                     </div>
                   </div>
                   : null
@@ -325,7 +343,7 @@ const LoginPage = () => {
                 <input ref={userNameInput} type="text" placeholder="myUserName" required/>
                 <FaUser className={"login-icon"}/>
               </div>
-              {errors.userName && <span className={"error-text"}> {errors.userName} </span>}
+              {errors.userName && <span className={"login-error-text"}> {errors.userName} </span>}
             </div>
             {
               (formState === "Register") ?
@@ -335,7 +353,7 @@ const LoginPage = () => {
                       <input ref={emailInput} type="email" placeholder="joe.soap@example.com" required/>
                       <MdEmail className={"login-icon"}/>
                     </div>
-                    {errors.email && <span className={"error-text"}> {errors.email} </span>}
+                    {errors.email && <span className={"login-error-text"}> {errors.email} </span>}
                   </div>
                   : null
             }
@@ -345,7 +363,7 @@ const LoginPage = () => {
                 <input ref={passWordInput} type="password" placeholder="Test@123" required/>
                 <FaLock className={"login-icon"}/>
               </div>
-              {errors.password && <span className={"error-text"}> {errors.password} </span>}
+              {errors.password && <span className={"login-error-text"}> {errors.password} </span>}
             </div>
             {(formState === "Login") ? null :
                 <div>
@@ -354,7 +372,7 @@ const LoginPage = () => {
                     <input ref={confirmPasswordInput} type="password" placeholder="Test@123" required/>
                     <FaLock className={"login-icon"}/>
                   </div>
-                  {errors.confirmPassword && <span className={"error-text"}> {errors.confirmPassword} </span>}
+                  {errors.confirmPassword && <span className={"login-error-text"}> {errors.confirmPassword} </span>}
                 </div>
             }
 

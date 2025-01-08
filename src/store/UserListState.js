@@ -29,34 +29,6 @@ const userSlice = createSlice(
             state.userList.push(action.payload);
           }
 
-          //Test
-          // let newList = [];
-          //
-          // for(var i = 0; i < state.userList.length; i++)
-          // {
-          //   newList.push(state.userList[i]);
-          // }
-          //
-          // newList.push(action.payload);
-          //
-          // state.userList = newList;
-          //
-          // newList = [];
-          // newList = state.userList;
-
-
-          /*
-          for(var i = 0; i < state.userList.length; i++) {}
-          {
-            if(state.userList[i].userName === action.payload.userName){
-              recordExists = true;
-            }
-          }
-
-          // If record exists then add it to the list
-          if(!recordExists){
-            state.userList.push(action.payload);
-          }*/
         },
         removeUser: (state, action) => {
           let index = state.userList.indexOf(action.payload.userName);

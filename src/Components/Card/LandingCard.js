@@ -10,7 +10,7 @@ function LandingCard(props){
   const location = useLocation();
   const navigate = useNavigate();
 
-
+// Display the card component for Landing, products and Cart section
   return (
       <Card className={"card-color"} onClick={() => navigate(props.navigatePath)}>
         <Card.Img className={"card-image"} variant={"top"} src={props.image} alt={props.imageAltDescription}/>

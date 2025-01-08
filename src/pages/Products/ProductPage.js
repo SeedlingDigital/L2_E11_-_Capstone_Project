@@ -1,8 +1,5 @@
 import React from "react";
 import "./Products.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import NavBar from "../../Components/Navbar/NavBar";
-import LandingCard from "../../Components/Card/LandingCard";
 import ProductCard from "../../Components/Card/ProductCard";
 import beanImage from "../../Assets/images/products/beans.jpg";
 import carrotImage from "../../Assets/images/products/carrots.jpg";
@@ -15,8 +12,6 @@ import {ProductModel} from "../../Models/ProductModel";
 
 const ProductPage = () => {
 
-
-
   // Create a list of products to display.
   const productsList = [
     new ProductModel(1, "Beans", "Green beans",2000.00, beanImage, "../../Assets/images/products/beans.jpg", false),
@@ -26,10 +21,6 @@ const ProductPage = () => {
     new ProductModel(5,"Peppers", "Red Peppers",1300.00, peppersImage, "../../Assets/images/products/peppers.jpg",false),
     new ProductModel(6,"Tomatoes", "Cocktail tomatoes",2000.00, tomatoeImage, "../../Assets/images/products/tomatoes.jpg",false)
       ]
-
-
-
-
 
   return (
       <div className="product-body">
